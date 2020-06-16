@@ -6324,7 +6324,6 @@ int dsi_display_get_modes(struct dsi_display *display,
 
 	dyn_clk_caps = &(display->panel->dyn_clk_caps);
 
-	num_dfps_rates = !dfps_caps.dfps_support ? 1 : dfps_caps.dfps_list_len;
 
 	panel_mode_count = display->panel->num_timing_nodes;
 
@@ -6344,6 +6343,9 @@ int dsi_display_get_modes(struct dsi_display *display,
 				   display->name, mode_idx);
 			goto error;
 		}
+
+		num_dfps_rates = ((!dfps_caps.dfps_support ||
+				is_cmd_mode) ? 1 : dfps_caps.dfps_list_len);
 
 		is_split_link = host->split_link.split_link_enabled;
 		sublinks_count = host->split_link.num_sublinks;
