@@ -6174,6 +6174,10 @@ static int dsi_display_get_mode_count_no_lock(struct dsi_display *display,
 
 	num_dfps_rates = !dfps_caps.dfps_support ? 1 : dfps_caps.dfps_list_len;
 
+	/* Constant FPS is not supported on command mode */
+	if (dsi_mode->panel_mode == DSI_OP_CMD_MODE)
+		return;
+
 	dyn_clk_caps = &(display->panel->dyn_clk_caps);
 
 	num_bit_clks = !dyn_clk_caps->dyn_clk_support ? 1 :
