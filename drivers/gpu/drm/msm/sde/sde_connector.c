@@ -733,7 +733,7 @@ int sde_connector_update_hbm(struct sde_connector *c_conn)
 	connector = &c_conn->base;
 
 	if (c_conn->connector_type != DRM_MODE_CONNECTOR_DSI)
-		return 0;
+		return rc;
 
 	c_state = to_sde_connector_state(connector->state);
 
@@ -746,11 +746,11 @@ int sde_connector_update_hbm(struct sde_connector *c_conn)
 	}
 
 	if (!dsi_display->panel->fod_dimlayer_enabled) {
-		return 0;
+		return rc;
 	}
 	if (!c_conn->encoder || !c_conn->encoder->crtc ||
 	    !c_conn->encoder->crtc->state) {
-		return 0;
+		return rc;
 	}
 
 	dim_layer_status = sde_crtc_get_dim_layer_status(c_conn->encoder->crtc->state);
@@ -818,7 +818,7 @@ int sde_connector_update_hbm(struct sde_connector *c_conn)
 		}
 	}
 	pr_debug("dim_layer_status:%d fod_dimlayer_hbm_enabled:%d\n", dim_layer_status, dsi_display->panel->fod_dimlayer_hbm_enabled);
-	return 0;
+	return rc;
 }
 
 int sde_connector_pre_kickoff(struct drm_connector *connector)
